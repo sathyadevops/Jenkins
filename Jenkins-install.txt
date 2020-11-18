@@ -1,0 +1,172 @@
+
+                                                   Linux Package Installation
+                                                 ----------------------------------------
+  for Ubuntu / Debian :
+  ------------------------------
+      # sudo su -                     
+      # apt-get update                                     ---> to Update repo
+      # apt-get install openjdk-8-jdk   -y         ---> to install java package
+      # apt-get install apache2  -y                   ---> to install web-server
+      # apt-get install tomcat8  -y                    ---> to install App-server
+      # apt-get install mysql-server  -y            ---> to install DB-server
+
+      # service apache2 start                           ---> to manage services
+      # service tomcat8 start
+      # service mysql start
+      # service apache2 stop
+      # service tomcat8 enable
+      # service mysql status
+      # netstat -lntp                                         ---> to list ports
+  
+      # apt-get install ant -y                            ---> to install Apache Ant
+      # apt-get install maven -y                       ---> to install Apache Maven
+      # apt-get install git-core -y
+      # java -version 
+      # ant -version
+      # mvn --version
+      # which java                                            ---> to get Path          
+      # which ant
+      # which mvn
+
+  Jenkins Install for Ubuntu-18.04
+  ---------------------------------------------
+      # wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key 
+
+add -
+
+Then add the following entry in your /etc/apt/sources.list:
+      deb https://pkg.jenkins.io/debian-stable binary/
+
+    # sudo apt-get update
+    # sudo apt-get install jenkins
+    # service jenkins start / stop
+    # netstat -lntp
+   
+  Browser :  http://<Public IP-addr>:8080
+     
+to Change Jenkins port:
+ -----------------------------------
+     # vi /etc/default/jenkins
+           HTTP_PORT=9090
+     # service  jenkins restart
+
+  for Centos / Redhat :
+  ------------------------------
+      # sudo su -                     
+      # yum -y update                              ---> to Update repo
+      # yum install java   -y                      ---> to install java package
+      # yum install httpd  -y                     ---> to install web-server
+      # yum install tomcat  -y                   ---> to install App-server
+      # yum install mariadb-server  -y      ---> to install DB-server
+
+      # systemctl start httpd                     ---> to manage services
+      # systemctl start tomcat
+      # systemctl start mariadb
+      # systemctl stop tomcat
+      # systemctl enable httpd
+      # systemctl disable httpd
+      # netstat -lntp                                     ---> to list ports
+  
+      # yum install ant -y                            ---> to install Apache Ant
+      # yum install maven -y                       ---> to install Apache Maven
+      # yum install git-core -y
+      # java -version 
+      # ant -version
+      # mvn --version
+      # which java                                        ---> to get Path          
+      # which ant
+      # which mvn
+
+
+      Jenkins Install for Centos:
+     ---------------------------------------
+       # sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-
+
+stable/jenkins.repo
+  sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+ 
+
+     # yum install jenkins
+     # systemctl jenkins start / stop
+
+ Browser :  http://<Public IP-addr>:8080
+
+ to Change Jenkins port:
+ -----------------------------------
+     # vi /etc/sysconfig/jenkins
+           JENKINS_PORT="9090"
+
+     # systemctl restart jenkins
+
+                                                          Distribution Mehtod
+                                                        ---------------------------------
+        * Download packages
+        * Extract packages
+        * Set paths 
+
+
+
+  Step-1: Download packages
+  ----------------------------------------
+                   # wget  http://apache-ant-1.10.9-bin.tar.gz
+                   # wget  http://apache-tomcat-9.0.39.tar.gz
+                   # wget  http://apache-maven-3.6.3-bin.tar.gz  
+                   # wget  http://jdk-8u271-linux-x64.tar.gz
+
+  Step-2: Extract packages
+  ----------------------------------------
+                   # tar -xzf apache-ant-1.10.9-bin.tar.gz
+                   # tar -xzf apache-tomcat-9.0.39.tar.gz
+                   # tar -xzf apache-maven-3.6.3-bin.tar.gz  
+                   # tar -xzf jdk-8u271-linux-x64.tar.gz 
+
+  Step-3: to Set paths 
+  -----------------------------
+                # cd ~ 
+                # ls -a
+                # vi  .profile    [OR]  # vi  .bashrc
+
+                export JAVA_HOME="/opt/jdk1.8.0_271"
+                export  PATH=$JAVA_HOME/bin:$PATH
+
+                export CATALINA_HOME="/opt/apache-tomcat-9.0.39"
+                export  PATH=$CATALINA_HOME/bin:$PATH
+
+                export  ANT_HOME="/opt/apache-ant-1.10.9"
+                export  PATH=$ANT_HOME/bin:$PATH
+
+                export  M2_HOME="/opt/apache-maven-3.6.3"
+                export  PATH=$M2_HOME/bin:$PATH
+              [press 'Esc']
+              [:wq  ---> write and quit ]
+
+
+  Step-4: to Update paths :
+  ------------------------------------
+                     # source .profile
+                     # java -version
+                     # ant -version
+                     # mvn --version
+
+                     # which java
+                     # which ant
+                     # which mvn
+
+                     # startup.sh               ---> to Manage tomcat service
+                     # shutdown.sh
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
