@@ -1,0 +1,182 @@
+  Linux Package Installation 
+                                                   ----------------------------------------
+Google ----> jenkins download
+
+Methods:
+=======
+     * apt-get installation          [OR]     <------ on Ubuntu
+
+     * yum installation               [OR]     <------ on Centos
+
+     * Distribution Method                      <----- on Ubuntu / Centos 
+
+
+
+Methon-1: Jenkins Installation for Ubuntu / Debain:
+--------------------------------------------------------------------------
+           # sudo su -
+           # apt-get update      
+           # apt-get install openjdk-8-jdk  -y	
+           # apt-get install tomcat8 -y
+           # apt-get install git-core -y
+           # apt-get install ant  -y
+           # apt-get install maven  -y
+
+Google ---> jenkins download
+           # wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+           Then add the following entry in your /etc/apt/sources.list:
+           deb https://pkg.jenkins.io/debian-stable binary/
+            
+           # apt-get update
+           # apt-get install jenkins  -y
+
+to Change Jenkins port:
+ -----------------------------------
+     # vi /etc/default/jenkins
+           HTTP_PORT=9090
+     # service  jenkins restart
+
+Method-2: Jenkins Installation for Centos / Redhat:
+-------------------------------------------------------------------------
+           # sudo su -
+           # yum update   
+           # yum install java -y
+           # yum install tomcat -y
+           # yum install git-core -y
+           # yum install ant  -y
+           # yum install maven  -y
+
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+  sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+
+           #  yum install jenkins
+      
+ to Change Jenkins port:
+ -----------------------------------
+     # vi /etc/sysconfig/jenkins
+           JENKINS_PORT="9090"
+
+     # systemctl restart jenkins
+
+
+Method-3: Distribution Method
+---------------------------------------------
+ Step-1 : Download packages:
+ --------------------------------------------
+                # sudo su -
+                # cd /opt
+                # wget http://jdk8.tar.gz
+                # wget http://tomcat9.tar.gz
+                # wget http://ant1.10.5.tar.gz
+                # wget http://maven3.6.0.tar.gz
+
+  Step-2 : Extract packags:
+ ----------------------------------------
+                # tar -xzf  jdk8.tar.gz
+                # tar -xzf  tomcat9.tar.gz
+                # tar -xzf  ant1.10.5.tar.gz
+                # tar -xzf  maven3.6.0.tar.gz
+
+  Step-3 : Set paths :
+ -----------------------------
+                # cd ~ 
+                # ls -a
+                # vi  .profile    [OR]  # vi  .bashrc
+
+                export JAVA_HOME="/opt/jdk1.8.0_281"
+                export  PATH=$JAVA_HOME/bin:$PATH
+
+                export CATALINA_HOME="/opt/apache-tomcat-9.0.44"
+                export  PATH=$CATALINA_HOME/bin:$PATH
+
+                export  ANT_HOME="/opt/apache-ant-1.10.9"
+                export  PATH=$ANT_HOME/bin:$PATH
+
+                export  M2_HOME="/opt/apache-maven-3.6.3"
+                export  PATH=$M2_HOME/bin:$PATH
+              [press 'Esc']
+              [:wq  ---> write and quit ]
+
+
+
+
+  Step-4 : Update paths:
+ --------------------------------
+                   #source .profile
+                   #java -version
+                   #ant   -version
+                   #mvn --version
+                   #echo $CATALINA_HOME
+ 
+                   #startup.sh
+                   #netstat -lntp
+                   #shutdown.sh
+
+
+
+                                                        Jenkins Projects
+                                                       --------------------------
+   Build-1:
+  -------------
+           Jenkins  --> New Item --->  Build ---> Execute shell
+
+ echo "Hello from Jenkins"
+mkdir /tmp/mydir
+echo "Have a Nice Day!" > /tmp/demo.txt
+
+          ---> save  --->  Build Now
+
+
+ Build-2:
+ ------------
+          Jenkins  ---> New Item ---> ANT_PROJECT  --> Free style project
+
+      Source Code Management   --->  Git --> https://github.com/sathyadevops/ant_proj
+
+      Build  --> Invoke ANT   --> ANT Version  ---> ant 1.10.9
+
+      Build  ---> Execute shell --->  
+
+   cp /root/.jenkins/workspace/ANT_PROJECT/dist/AntExample.war 
+        /opt/apache-tomcat-9.0.44/webapps/
+    echo "File Deployed"
+
+  Post-build Actions   -->  Email notifications --->  Recipients 
+
+
+  Build-3:
+ ------------
+          Jenkins  ---> New Item ---> Maven compile  --> Free style project
+
+      Source Code Management   --->  Git --> https://github.com/sathyadevops/mvnproj
+ 
+       Build  ---> Invoke Top level Maven Targets --> 
+           Maven Version :  mvn3.6
+                           Goal :  compile   --> save and Build
+
+        Manage Jenkins --> manage Plugins --> Available --> "Maven Integration" plugin
+
+ Build-4:
+ ------------
+          Jenkins  ---> New Item ---> Maven Package --> Maven Project
+
+      Source Code Management   --->  Git --> https://github.com/sathyadevops/mvnproj
+ 
+       Build  ---> Goals and Options : test package  --> save --> Build now
+
+
+Build-5:
+ ------------
+     Jenkins  ---> New Item ---> Maven Deploy  --> Free style project
+
+      Build  ---> Execute shell --->  
+
+   cp /root/.jenkins/workspace/Maven-Package/target/myproj.war
+        /opt/apache-tomcat-9.0.44/webapps/
+    echo "File Deployed"
+
+   Manage Jenkins --> manage Plugins --> Available --> "Build Pipeline" plugin
+ 
+  Post-build Actions  -->  Build Other projects  --> Maven-Package
+ 
+
